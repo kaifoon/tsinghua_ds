@@ -31,20 +31,21 @@ impl BST for AVLTree {
         None
     }
 
-    /// 3-4 insert method rotated
+    /// method rotated
     fn insert(&mut self, key: i32, val: i32) {
         let mut ptr = self.0.as_mut();
         let mut prev_ptrs = Vec::<*mut TreeNode>::new();
         while let Some(node) = ptr {
             let node_key = node.get_key();
-            prev_ptrs.push(&mut **node);
             if key > node_key {
+                prev_ptrs.push(&mut **node);
                 if node.right.is_none() {
                     node.right = Some(Box::new(TreeNode::new(key, val)));
                     break;
                 }
                 ptr = node.right.as_mut();
             } else if key < node_key {
+                prev_ptrs.push(&mut **node);
                 if node.left.is_none() {
                     node.left = Some(Box::new(TreeNode::new(key, val)));
                     break;
@@ -86,8 +87,7 @@ impl BST for AVLTree {
         match target_val {
             None => None,
             Some(node) => {
-                let mut inner_val = 0;
-                let _ = inner_val;
+                let mut _inner_val = 0;
                 // two children
                 if node.left.is_some() && node.right.is_some() {
                     // if right.left.is_none(), min right child is right node, so
@@ -123,7 +123,7 @@ impl BST for AVLTree {
                     let mut leftmost_node = parent_left_node.left.take().unwrap();
 
                     // replace key, value
-                    inner_val = replace(&mut node.val, leftmost_node.val);
+                    _inner_val = replace(&mut node.val, leftmost_node.val);
                     let _ = replace(&mut node.key, leftmost_node.key);
                     let _ = replace(&mut parent_left_node.left, leftmost_node.right.take());
                     while let Some(node_ptr) = inner_ptrs.pop() {
@@ -135,14 +135,14 @@ impl BST for AVLTree {
                 // one or zero children
                 } else if node.left.is_none() && node.right.is_some() {
                     let right_node = node.right.take().unwrap();
-                    inner_val = replace(node, *right_node).val;
+                    _inner_val = replace(node, *right_node).val;
                 } else if node.right.is_none() && node.left.is_some() {
                     let left_node = node.left.take().unwrap();
-                    inner_val = replace(node, *left_node).val;
+                    _inner_val = replace(node, *left_node).val;
                 } else {
                     if let Some(prev_ptr) = prev_ptrs.pop() {
                         let prev_node = unsafe { &mut *prev_ptr };
-                        inner_val = if let Some(left_node) = prev_node.left.as_ref() {
+                        _inner_val = if let Some(left_node) = prev_node.left.as_ref() {
                             if left_node.val == node.val {
                                 prev_node.left.take().unwrap().val
                             } else {
@@ -155,7 +155,7 @@ impl BST for AVLTree {
                         prev_node.update_height();
                         prev_node.rebalance();
                     } else {
-                        inner_val = self.0.take().unwrap().val;
+                        _inner_val = self.0.take().unwrap().val;
                     }
                 }
                 while let Some(node_ptr) = prev_ptrs.pop() {
@@ -164,7 +164,7 @@ impl BST for AVLTree {
                     node.rebalance();
                 }
 
-                Some(inner_val)
+                Some(_inner_val)
             }
         }
     }
@@ -222,6 +222,26 @@ mod tests {
         assert_eq!(bst.remove(15), None);
         assert_eq!(bst.search(15), None);
         assert_eq!(bst.remove(3), Some(8));
+        bst.insert(15, 12345);
         println!("{:#?}", bst);
+        bst = AVLTree::new(10, 1024);
+        bst.insert(2, 8);
+        bst.insert(3, 8);
+        bst.insert(4, 16);
+        bst.insert(8, 256);
+        bst.insert(9, 512);
+        bst.insert(11, 234);
+        bst.insert(12, 284910);
+        bst.insert(13, 2344);
+        bst.insert(15, 12345);
+        bst.insert(18, 1994);
+        bst.insert(20, 12993);
+        bst.insert(19, 2849);
+        bst.insert(21, 28439);
+        bst.insert(22, 28494);
+        bst.insert(23, 28499);
+        bst.insert(24, 28499);
+        bst.insert(25, 28499);
+        //println!("{:#?}", bst);
     }
 }

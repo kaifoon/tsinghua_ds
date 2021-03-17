@@ -93,7 +93,6 @@ impl TreeNode {
             return;
         }
 
-        // right node must not be `None`, because right heavy
         let right_node = self.right.as_mut().unwrap();
         let right_left_tree = right_node.left.take();
         let right_right_tree = right_node.right.take();
@@ -120,7 +119,7 @@ impl TreeNode {
         if self.left.is_none() {
             return;
         }
-        // left node must not be `None`, because left heavy
+
         let left_node = self.left.as_mut().unwrap();
         let left_right_tree = left_node.right.take();
         let left_left_tree = left_node.left.take();
@@ -159,7 +158,7 @@ impl TreeNode {
                 // root is left heavy
                 let left_node = self.left.as_mut().unwrap();
                 // inner node is right heavy
-                if left_node.balance_factor() == 1 {
+                if left_node.balance_factor() == -1 {
                     left_node.rotate_left();
                 }
 
