@@ -16,7 +16,7 @@ impl AVLTree {
 
 impl BST for AVLTree {
     /// search val by key
-    fn search(&self, key: i32) -> Option<i32> {
+    fn search(&mut self, key: i32) -> Option<i32> {
         let mut ptr = self.0.as_ref();
         while let Some(node) = ptr {
             let node_key = node.get_key();
