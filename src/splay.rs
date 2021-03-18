@@ -31,7 +31,7 @@ impl SplayTree {
 
         if let Some(node_ptr) = prev_ptrs.pop() {
             let node = unsafe { &mut *node_ptr };
-            TreeNode::splay(node, prev_ptrs);
+            node.splay(prev_ptrs);
         }
     }
 }
@@ -140,6 +140,7 @@ mod tests {
         bst.insert(3, 8);
         bst.insert(2, 4);
         bst.insert(15, 12345);
+        println!();
         bst.insert(13, 2344);
         bst.insert(11, 234);
         bst.insert(18, 1994);
@@ -167,6 +168,7 @@ mod tests {
         assert_eq!(bst.remove(8), Some(256));
         assert_eq!(bst.remove(8), None);
         assert_eq!(bst.search(8), None);
+        assert_eq!(bst.search(12), Some(28499));
         bst.insert(17, 49);
         bst.insert(14, 149);
         bst.insert(16, 169);

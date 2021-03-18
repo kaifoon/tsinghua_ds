@@ -174,7 +174,7 @@ impl TreeNode {
     }
 
     /// splay algorithm
-    pub fn splay(mut node: &mut TreeNode, mut prev_ptrs: Vec<*mut TreeNode>) {
+    pub fn splay(mut self: &mut Self, mut prev_ptrs: Vec<*mut TreeNode>) {
         let last_parent = if prev_ptrs.len() % 2 == 1 {
             prev_ptrs.remove(0)
         } else {
@@ -185,11 +185,11 @@ impl TreeNode {
             let grandparent = unsafe { &mut *grandparent_ptr };
             let parent = unsafe { &mut *parent_ptr };
 
-            match (node.who_child(parent), parent.who_child(grandparent)) {
+            match (self.who_child(parent), parent.who_child(grandparent)) {
                 (ChildType::Left, ChildType::Left) => {
                     // zig-zig
-                    let v_left = node.left.take();
-                    let v_right = node.right.take();
+                    let v_left = self.left.take();
+                    let v_right = self.right.take();
 
                     let p_left = parent.left.take();
                     let p_right = parent.right.take();
@@ -198,11 +198,11 @@ impl TreeNode {
                     let g_right = grandparent.right.take();
 
                     // grandparent swap with self
-                    swap(&mut node.key, &mut grandparent.key);
-                    swap(&mut node.val, &mut grandparent.val);
+                    swap(&mut self.key, &mut grandparent.key);
+                    swap(&mut self.val, &mut grandparent.val);
 
-                    node.left = p_right;
-                    node.right = g_right;
+                    self.left = p_right;
+                    self.right = g_right;
 
                     parent.left = v_right;
                     parent.right = p_left;
@@ -210,16 +210,16 @@ impl TreeNode {
                     grandparent.left = v_left;
                     grandparent.right = g_left;
 
-                    node.update_height();
+                    self.update_height();
                     parent.update_height();
                     grandparent.update_height();
 
-                    node = grandparent;
+                    self = grandparent;
                 }
                 (ChildType::Right, ChildType::Right) => {
                     // zag-zag
-                    let v_left = node.left.take();
-                    let v_right = node.right.take();
+                    let v_left = self.left.take();
+                    let v_right = self.right.take();
 
                     let p_left = parent.left.take();
                     let p_right = parent.right.take();
@@ -228,11 +228,11 @@ impl TreeNode {
                     let g_right = grandparent.right.take();
 
                     // grandparent swap with self
-                    swap(&mut node.key, &mut grandparent.key);
-                    swap(&mut node.val, &mut grandparent.val);
+                    swap(&mut self.key, &mut grandparent.key);
+                    swap(&mut self.val, &mut grandparent.val);
 
-                    node.left = g_left;
-                    node.right = p_left;
+                    self.left = g_left;
+                    self.right = p_left;
 
                     parent.right = v_left;
                     parent.left = p_right;
@@ -240,59 +240,59 @@ impl TreeNode {
                     grandparent.right = v_right;
                     grandparent.left = g_right;
 
-                    node.update_height();
+                    self.update_height();
                     parent.update_height();
                     grandparent.update_height();
 
-                    node = grandparent;
+                    self = grandparent;
                 }
                 (ChildType::Left, ChildType::Right) => {
                     // zig-zag
-                    let v_left = node.left.take();
-                    let v_right = node.right.take();
+                    let v_left = self.left.take();
+                    let v_right = self.right.take();
 
                     let p_left = parent.left.take();
                     let g_left = grandparent.left.take();
 
                     // grandparent swap with self
-                    swap(&mut node.key, &mut grandparent.key);
-                    swap(&mut node.val, &mut grandparent.val);
+                    swap(&mut self.key, &mut grandparent.key);
+                    swap(&mut self.val, &mut grandparent.val);
 
-                    node.left = g_left;
-                    node.right = v_left;
+                    self.left = g_left;
+                    self.right = v_left;
 
                     parent.left = v_right;
                     grandparent.left = p_left;
 
-                    node.update_height();
+                    self.update_height();
                     parent.update_height();
                     grandparent.update_height();
 
-                    node = grandparent;
+                    self = grandparent;
                 }
                 (ChildType::Right, ChildType::Left) => {
                     // zag-zig
-                    let v_left = node.left.take();
-                    let v_right = node.right.take();
+                    let v_left = self.left.take();
+                    let v_right = self.right.take();
 
                     let p_right = parent.right.take();
                     let g_right = grandparent.right.take();
 
                     // grandparent swap with self
-                    swap(&mut node.key, &mut grandparent.key);
-                    swap(&mut node.val, &mut grandparent.val);
+                    swap(&mut self.key, &mut grandparent.key);
+                    swap(&mut self.val, &mut grandparent.val);
 
-                    node.left = v_right;
-                    node.right = g_right;
+                    self.left = v_right;
+                    self.right = g_right;
 
                     parent.right = v_left;
                     grandparent.right = p_right;
 
-                    node.update_height();
+                    self.update_height();
                     parent.update_height();
                     grandparent.update_height();
 
-                    node = grandparent;
+                    self = grandparent;
                 }
             }
         }
@@ -300,7 +300,7 @@ impl TreeNode {
         if !last_parent.is_null() {
             // grand grand parent
             let parent = unsafe { &mut *last_parent };
-            match node.who_child(parent) {
+            match self.who_child(parent) {
                 ChildType::Left => {
                     parent.rotate_right();
                 }
