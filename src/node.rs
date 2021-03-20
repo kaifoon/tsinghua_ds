@@ -23,6 +23,17 @@ pub enum ChildType {
     Right,
 }
 
+/// B-Tree Node
+#[derive(Default, Debug, PartialEq, Eq)]
+pub struct BTNode {
+    /// key vector
+    pub keys: Vec<i32>,
+    /// values vector
+    pub vals: Vec<i32>,
+    /// children vector
+    pub children: Vec<Option<Box<BTNode>>>,
+}
+
 impl TreeNode {
     /// New treenode instance
     #[inline]
@@ -309,5 +320,26 @@ impl TreeNode {
                 }
             }
         }
+    }
+}
+
+impl BTNode {
+    /// new instance
+    pub fn new(keys: Vec<i32>, vals: Vec<i32>, children: Vec<Option<Box<BTNode>>>) -> Self {
+        Self {
+            keys,
+            vals,
+            children,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn btnode_operations() {
+        let _btnode = BTNode::default();
+        // println!("{:#?}", _btnode);
     }
 }

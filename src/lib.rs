@@ -4,10 +4,12 @@
 
 pub use avl::AVLTree;
 pub use binary::BinarySearchTree;
-pub use node::TreeNode;
+pub use btree::BTree;
+pub use node::{BTNode, TreeNode};
 pub use splay::SplayTree;
 mod avl;
 mod binary;
+mod btree;
 mod node;
 mod splay;
 

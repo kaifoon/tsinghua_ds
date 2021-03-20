@@ -223,7 +223,7 @@ mod tests {
         assert_eq!(bst.search(15), None);
         assert_eq!(bst.remove(3), Some(8));
         bst.insert(15, 12345);
-        println!("{:#?}", bst);
+        //println!("{:#?}", bst);
         bst = AVLTree::new(10, 1024);
         bst.insert(2, 8);
         bst.insert(3, 8);
