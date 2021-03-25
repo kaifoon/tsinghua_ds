@@ -68,7 +68,7 @@ impl<K: Eq + Hash + Clone, V: Clone + Default> HashMap<K, V> {
     ///
     /// ```
     ///
-    /// use bst::HashMap;
+    /// use tsinghua_ds::HashMap;
     ///
     /// let mut map: HashMap<&str, i32> = HashMap::new();
     /// ```
@@ -94,7 +94,7 @@ impl<K: Eq + Hash + Clone, V: Clone + Default> HashMap<K, V> {
     /// # Examples
     ///
     /// ```
-    /// use bst::HashMap;
+    /// use tsinghua_ds::HashMap;
     ///
     /// let mut map = HashMap::new();
     /// assert_eq!(map.insert(37, "a"), None);
@@ -152,7 +152,7 @@ impl<K: Eq + Hash + Clone, V: Clone + Default> HashMap<K, V> {
     /// # Examples
     ///
     /// ```
-    /// use bst::HashMap;
+    /// use tsinghua_ds::HashMap;
     /// let mut map: HashMap<&str, i32> = HashMap::with_capacity(10);
     /// ```
     pub fn with_capacity(capacity: usize) -> Self {
@@ -185,7 +185,7 @@ impl<K: Eq + Hash + Clone, V: Clone + Default> HashMap<K, V> {
     /// # Examples
     ///
     /// ```
-    /// use bst::HashMap;
+    /// use tsinghua_ds::HashMap;
     ///
     /// let mut map = HashMap::new();
     /// map.insert(1, "a");
@@ -232,7 +232,7 @@ impl<K: Eq + Hash + Clone, V: Clone + Default> HashMap<K, V> {
     /// # Examples
     ///
     /// ```
-    /// use bst::HashMap;
+    /// use tsinghua_ds::HashMap;
     ///
     /// let mut map = HashMap::new();
     /// map.insert(1, "a");

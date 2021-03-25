@@ -1,5 +1,5 @@
 [package]
-name = "bst"
+name = "tsinghua_ds"
 version = "0.1.0"
 authors = ["Kaifoon <zerco@foxmail.com>"]
 edition = "2018"

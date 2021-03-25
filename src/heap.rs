@@ -19,7 +19,7 @@ use std::mem::{swap, take};
 /// # Examples
 ///
 /// ```
-/// use bst::BinaryHeap;
+/// use tsinghua_ds::BinaryHeap;
 ///
 /// // Type inference lets us omit an explicit type signature (which
 /// // would be `BinaryHeap<i32>` in this example).
@@ -55,7 +55,7 @@ use std::mem::{swap, take};
 /// value instead of the greatest one.
 ///
 /// ```
-/// use bst::BinaryHeap;
+/// use tsinghua_ds::BinaryHeap;
 /// use std::cmp::Reverse;
 ///
 /// let mut heap = BinaryHeap::new();
@@ -97,7 +97,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let mut heap = BinaryHeap::new();
     /// heap.push(4);
     /// ```
@@ -115,7 +115,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let mut heap = BinaryHeap::with_capacity(10);
     /// heap.push(4);
     /// ```
@@ -132,7 +132,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let mut heap = BinaryHeap::new();
     /// assert_eq!(heap.peek(), None);
     ///
@@ -157,7 +157,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let mut heap = BinaryHeap::new();
     /// heap.push(3);
     /// heap.push(5);
@@ -210,7 +210,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let mut heap = BinaryHeap::from(vec![1, 3]);
     ///
     /// assert_eq!(heap.pop(), Some(3));
@@ -268,7 +268,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let heap = BinaryHeap::from(vec![1, 3]);
     ///
     /// assert_eq!(heap.len(), 2);
@@ -284,7 +284,7 @@ impl<T: Ord + Default> BinaryHeap<T> {
     /// Basic usage:
     ///
     /// ```
-    /// use bst::BinaryHeap;
+    /// use tsinghua_ds::BinaryHeap;
     /// let mut heap = BinaryHeap::new();
     ///
     /// assert!(heap.is_empty());
