@@ -332,7 +332,6 @@ impl BST for BTree {
                 }
             }
         }
-
         None
     }
 }
