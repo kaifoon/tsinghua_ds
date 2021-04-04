@@ -159,49 +159,47 @@ impl BTree {
                         parent_node.children.remove(idx);
                     }
                 }
-            } else {
-                if let Some(left_sibling) = parent_node.children[idx - 1].as_mut() {
-                    // rotate
-                    if left_sibling.keys.len() + 1 > self.lower_bound {
-                        node.keys.insert(0, parent_node.keys[idx - 1]);
-                        node.vals.insert(0, parent_node.vals[idx - 1]);
-
-                        parent_node.keys[idx - 1] = left_sibling.keys.pop().unwrap();
-                        parent_node.vals[idx - 1] = left_sibling.vals.pop().unwrap();
-                        node.children.push(left_sibling.children.pop().unwrap());
-                    } else {
-                        // merge
-                        left_sibling.keys.push(parent_node.keys.remove(idx - 1));
-                        left_sibling.vals.push(parent_node.vals.remove(idx - 1));
-
-                        left_sibling.keys.append(&mut node.keys);
-                        left_sibling.vals.append(&mut node.vals);
-                        left_sibling.children.append(&mut node.children);
-
-                        parent_node.children.remove(idx);
-                    }
-                // after left [19] [18,14,]
+            } else if let Some(left_sibling) = parent_node.children[idx - 1].as_mut() {
                 // rotate
-                } else if let Some(right_sibling) = parent_node.children[idx + 1].as_mut() {
-                    // rotate
-                    if right_sibling.keys.len() + 1 > self.lower_bound {
-                        node.keys.push(parent_node.keys[idx - 1]);
-                        node.vals.push(parent_node.vals[idx - 1]);
+                if left_sibling.keys.len() + 1 > self.lower_bound {
+                    node.keys.insert(0, parent_node.keys[idx - 1]);
+                    node.vals.insert(0, parent_node.vals[idx - 1]);
 
-                        parent_node.keys[idx - 1] = right_sibling.keys.remove(0);
-                        parent_node.vals[idx - 1] = right_sibling.vals.remove(0);
-                        node.children.push(right_sibling.children.remove(0));
-                    } else {
-                        // merge
-                        node.keys.push(parent_node.keys.remove(idx - 1));
-                        node.vals.push(parent_node.vals.remove(idx - 1));
+                    parent_node.keys[idx - 1] = left_sibling.keys.pop().unwrap();
+                    parent_node.vals[idx - 1] = left_sibling.vals.pop().unwrap();
+                    node.children.push(left_sibling.children.pop().unwrap());
+                } else {
+                    // merge
+                    left_sibling.keys.push(parent_node.keys.remove(idx - 1));
+                    left_sibling.vals.push(parent_node.vals.remove(idx - 1));
 
-                        node.keys.append(&mut right_sibling.keys);
-                        node.vals.append(&mut right_sibling.vals);
-                        node.children.append(&mut right_sibling.children);
+                    left_sibling.keys.append(&mut node.keys);
+                    left_sibling.vals.append(&mut node.vals);
+                    left_sibling.children.append(&mut node.children);
 
-                        parent_node.children.remove(idx);
-                    }
+                    parent_node.children.remove(idx);
+                }
+            // after left [19] [18,14,]
+            // rotate
+            } else if let Some(right_sibling) = parent_node.children[idx + 1].as_mut() {
+                // rotate
+                if right_sibling.keys.len() + 1 > self.lower_bound {
+                    node.keys.push(parent_node.keys[idx - 1]);
+                    node.vals.push(parent_node.vals[idx - 1]);
+
+                    parent_node.keys[idx - 1] = right_sibling.keys.remove(0);
+                    parent_node.vals[idx - 1] = right_sibling.vals.remove(0);
+                    node.children.push(right_sibling.children.remove(0));
+                } else {
+                    // merge
+                    node.keys.push(parent_node.keys.remove(idx - 1));
+                    node.vals.push(parent_node.vals.remove(idx - 1));
+
+                    node.keys.append(&mut right_sibling.keys);
+                    node.vals.append(&mut right_sibling.vals);
+                    node.children.append(&mut right_sibling.children);
+
+                    parent_node.children.remove(idx);
                 }
             }
 

@@ -37,12 +37,10 @@ pub fn find_majory<T: Ord + Default + Copy>(slice: &mut [T]) -> T {
         if c == 0 {
             maj = slice[i];
             c = 1;
+        } else if maj == slice[i] {
+            c += 1;
         } else {
-            if maj == slice[i] {
-                c += 1;
-            } else {
-                c -= 1;
-            }
+            c -= 1;
         }
     }
 

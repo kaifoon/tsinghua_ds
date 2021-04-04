@@ -116,24 +116,22 @@ impl BST for BinarySearchTree {
                     let left_node = node.left.take().unwrap();
                     let inner_val = replace(node, *left_node).val;
                     return Some(inner_val);
-                } else {
-                    if let Some(prev_ptr) = prev_ptrs.pop() {
-                        let prev_node = unsafe { &mut *prev_ptr };
-                        let inner_val = if let Some(left_node) = prev_node.left.as_ref() {
-                            if left_node.val == node.val {
-                                prev_node.left.take().unwrap().val
-                            } else {
-                                prev_node.right.take().unwrap().val
-                            }
+                } else if let Some(prev_ptr) = prev_ptrs.pop() {
+                    let prev_node = unsafe { &mut *prev_ptr };
+                    let inner_val = if let Some(left_node) = prev_node.left.as_ref() {
+                        if left_node.val == node.val {
+                            prev_node.left.take().unwrap().val
                         } else {
                             prev_node.right.take().unwrap().val
-                        };
-
-                        return Some(inner_val);
+                        }
                     } else {
-                        let inner_val = self.0.take().unwrap().val;
-                        return Some(inner_val);
-                    }
+                        prev_node.right.take().unwrap().val
+                    };
+
+                    return Some(inner_val);
+                } else {
+                    let inner_val = self.0.take().unwrap().val;
+                    return Some(inner_val);
                 }
             }
         }

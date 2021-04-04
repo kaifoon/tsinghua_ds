@@ -139,24 +139,22 @@ impl BST for AVLTree {
                 } else if node.right.is_none() && node.left.is_some() {
                     let left_node = node.left.take().unwrap();
                     _inner_val = replace(node, *left_node).val;
-                } else {
-                    if let Some(prev_ptr) = prev_ptrs.pop() {
-                        let prev_node = unsafe { &mut *prev_ptr };
-                        _inner_val = if let Some(left_node) = prev_node.left.as_ref() {
-                            if left_node.val == node.val {
-                                prev_node.left.take().unwrap().val
-                            } else {
-                                prev_node.right.take().unwrap().val
-                            }
+                } else if let Some(prev_ptr) = prev_ptrs.pop() {
+                    let prev_node = unsafe { &mut *prev_ptr };
+                    _inner_val = if let Some(left_node) = prev_node.left.as_ref() {
+                        if left_node.val == node.val {
+                            prev_node.left.take().unwrap().val
                         } else {
                             prev_node.right.take().unwrap().val
-                        };
-
-                        prev_node.update_height();
-                        prev_node.rebalance();
+                        }
                     } else {
-                        _inner_val = self.0.take().unwrap().val;
-                    }
+                        prev_node.right.take().unwrap().val
+                    };
+
+                    prev_node.update_height();
+                    prev_node.rebalance();
+                } else {
+                    _inner_val = self.0.take().unwrap().val;
                 }
                 while let Some(node_ptr) = prev_ptrs.pop() {
                     let node = unsafe { &mut *node_ptr };

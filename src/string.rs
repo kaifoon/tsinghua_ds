@@ -113,10 +113,8 @@ pub fn karp_rabin(text: &str, pattern: &str) -> Option<usize> {
                 + BASE as isize) as usize
                 % BASE;
         }
-        if source_code == hash_code {
-            if &text[i + 1 - m..i + 1] == pattern {
-                return Some(i + 1 - m);
-            }
+        if source_code == hash_code && &text[i + 1 - m..i + 1] == pattern {
+            return Some(i + 1 - m);
         }
     }
 
