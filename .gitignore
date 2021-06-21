@@ -1,3 +1,5 @@
 /target
 Cargo.lock
 .gdb_history
+src/.project_alt.json
+src/.SpaceVim.d/
